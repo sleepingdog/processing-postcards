@@ -9,8 +9,8 @@ color backgroundColour = #000000;
 int numPossibleSystems = 9;
 int sunSizeMean = 24;
 int sunSizeVariation = 4;
-int planetSizeMean = 10;
-int planetSizeVariation = 2;
+int planetSizeMean = 11;
+int planetSizeVariation = 4;
 int sunBrightness = 255;
 int sunSaturation = 127;
 int planetBrightness = 127;
@@ -22,7 +22,7 @@ float lifeChance = 0.67; // how likely planets are to start with life
 float captureChance = 1.5; // how many planet-widths distance will a lifeform be captured
 
 void setup() {
-  size (900, 600);
+  size (960, 540);
   colorMode(HSB);
   systems = new ArrayList<SolarSystem>();
   life = new ArrayList<LifeForm>();

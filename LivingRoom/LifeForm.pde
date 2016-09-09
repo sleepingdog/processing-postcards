@@ -17,7 +17,7 @@ class LifeForm {
   float rot;
   float dx; // x movement per frame in float mode
   float dy; // y movement per frame in float mode
-  float spaceSpeed = 0.01; // factor governing space travel speed
+  float spaceSpeed = 0.02; // factor governing space travel speed (0.01 is good if slow)
   float escapeFactor = 0.75; // factor governing escape height
   float jumpForceFactor = 98.0;
   float jumpForceRandom = 15.0;
@@ -66,8 +66,8 @@ class LifeForm {
         this.dy = cos(radians(this.rot)) * _o * spaceSpeed;
         this.x = _x + sin(radians(this.rot)) * (_o - legLength - (bodySize / 2) - jumpHeight);
         this.y = _y + cos(radians(this.rot)) * (_o - legLength - (bodySize / 2) - jumpHeight);
-        if (this.x > _x) this.dx = this.dx * -1;
-        if (this.y > _y) this.dy = this.dy * -1;        
+        //if (this.x < _x) this.dx = this.dx * -1;
+        //if (this.y < _y) this.dy = this.dy * -1;        
         this.planet = -1; // escapes from planet
       }
     } else {
