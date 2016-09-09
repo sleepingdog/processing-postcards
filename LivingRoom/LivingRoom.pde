@@ -9,7 +9,7 @@ color backgroundColour = #000000;
 int numPossibleSystems = 9;
 int sunSizeMean = 24;
 int sunSizeVariation = 4;
-int planetSizeMean = 12;
+int planetSizeMean = 10;
 int planetSizeVariation = 2;
 int sunBrightness = 255;
 int sunSaturation = 127;
@@ -17,8 +17,9 @@ int planetBrightness = 127;
 int planetSaturation = 255;
 int lifeBodySize = 6;
 int lifeBodyMass = lifeBodySize * lifeBodySize / 100;
-float breedChance = 0.01;
-float lifeChance = 0.67;
+float breedChance = 0.01; // how likely breeding will occur
+float lifeChance = 0.67; // how likely planets are to start with life
+float captureChance = 1.5; // how many planet-widths distance will a lifeform be captured
 
 void setup() {
   size (900, 600);
@@ -88,7 +89,39 @@ void draw() {
       }
     }
   }
+  // floating lifeforms
+  for (int i = 0; i < life.size(); i++) {
+    if (life.get(i).planet == -1) {
+      //test
+      //println("floater!");
+      life.get(i).display(life.get(i).x, life.get(i).y, 0);
+      // check for capture by another planet
+      float distance;
+      for (int j = 0; j < systems.size(); j++) {
+        if (systems.get(j).removed == false) {
+          // distance check
+          // test
+          distance = dist(life.get(i).x, life.get(i).y, systems.get(j).getPlanetX(), systems.get(j).getPlanetY());
+          //println("distance: " + distance + " capture distance: " + systems.get(j).planetSize * captureChance);
+          if (distance < systems.get(j).planetSize * captureChance) {
+            life.get(i).planet = j;
+            life.get(i).mode = 1;
+            int inhabitants = 0;
+            for (int k = 0; k < life.size(); k++) {
+              if (life.get(k).planet == i) inhabitants++;
+            }
+            life.get(i).planetSlot = inhabitants + 1;
+          }
+        }
+      }
+    }
+  }
   breed();
+  if(key == 's') {
+    //println(frameCount);
+    saveFrame();
+  }
+
 }
 
 void breed() {
